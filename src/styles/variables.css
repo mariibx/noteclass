@@ -1,0 +1,23 @@
+
+:root {
+  /* Identidade visual NoteClass */
+  --color-primary: #8872C7;
+  --color-primary-light: #E8E2F3;
+  --color-white: #FFFFFF;
+  --color-background: #F5F4F8;
+  --color-text: #292735;
+
+  /* Tipografia */
+  --font-primary: 'Inter', sans-serif;
+
+  /* Layout */
+  --sidebar-width: 260px;
+  --header-height: 76px;
+
+  /* Bordas e sombras */
+  --radius-small: 8px;
+  --radius-medium: 12px;
+  --radius-large: 18px;
+
+  --shadow-card: 0 2px 12px rgba(41, 39, 53, 0.05);
+}

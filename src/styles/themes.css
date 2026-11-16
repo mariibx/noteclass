@@ -1,0 +1,22 @@
+
+[data-theme="light"] {
+  --bg-primary: #F5F4F8;
+  --bg-secondary: #FFFFFF;
+  --bg-sidebar: #FFFFFF;
+  --text-primary: #292735;
+  --text-secondary: #777381;
+  --border-color: #E8E5ED;
+  --accent-soft: #E8E2F3;
+  --card-shadow: 0 2px 12px rgba(41, 39, 53, 0.05);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #211F2A;
+  --bg-secondary: #302C3B;
+  --bg-sidebar: #292634;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B7B2C2;
+  --border-color: #464151;
+  --accent-soft: #49405D;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}

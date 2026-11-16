@@ -1,0 +1,672 @@
+
+/* ========================================
+   ESTRUTURA GERAL
+======================================== */
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: clip;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+  padding: 32px;
+  background: var(--bg-primary);
+  box-sizing: border-box;
+}
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.main-header h1 {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 7px;
+  color: var(--text-primary);
+}
+
+.main-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ========================================
+   AÇÕES DO CABEÇALHO
+======================================== */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Pesquisa */
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: 260px;
+  min-width: 0;
+  padding: 12px;
+  box-sizing: border-box;
+
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+
+  color: var(--text-secondary);
+}
+
+.search-box input {
+  width: 100%;
+  min-width: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+  color: var(--text-primary);
+
+  font-family: var(--font-primary);
+  font-size: 13px;
+}
+
+.search-box input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Botão de notificações */
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.icon-button:hover {
+  background: var(--accent-soft);
+  color: var(--color-primary);
+}
+
+/* ========================================
+   FILTRO DE CATEGORIAS
+======================================== */
+
+.category-filter {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  width: 190px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.category-filter select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  padding: 10px 12px;
+  box-sizing: border-box;
+
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+
+  font-family: var(--font-primary);
+  font-size: 12px;
+
+  outline: none;
+  cursor: pointer;
+}
+
+.category-filter select:focus {
+  border-color: var(--color-primary);
+}
+
+.category-filter select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   CONTEÚDO DAS ANOTAÇÕES
+======================================== */
+
+.notes-content {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Barra superior da grade */
+
+.notes-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.notes-toolbar h2 {
+  font-size: 17px;
+  color: var(--text-primary);
+}
+
+/* ========================================
+   CARTÃO DE BOAS-VINDAS
+======================================== */
+
+.welcome-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 360px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+
+  text-align: center;
+
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-large);
+
+  box-shadow: var(--card-shadow);
+
+  overflow: hidden;
+}
+
+/* Ícone de boas-vindas */
+
+.welcome-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 65px;
+  height: 65px;
+  flex-shrink: 0;
+
+  background: var(--accent-soft);
+  color: var(--color-primary);
+
+  border-radius: 18px;
+  margin-bottom: 22px;
+
+  transition: transform 0.2s ease;
+}
+
+.welcome-card:hover .welcome-icon {
+  transform: translateY(-3px);
+}
+
+.welcome-card h2 {
+  color: var(--text-primary);
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.welcome-card p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ========================================
+   BOTÃO PRINCIPAL
+======================================== */
+
+.welcome-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin-top: 24px;
+  padding: 13px 20px;
+
+  background: var(--color-primary);
+  color: white;
+
+  border: none;
+  border-radius: 10px;
+
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.welcome-button:hover {
+  opacity: 0.88;
+}
+
+.welcome-button:active {
+  transform: scale(0.98);
+}
+
+/* ========================================
+   FILTRO PERSONALIZADO DE CATEGORIAS
+======================================== */
+
+.category-select-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  box-sizing: border-box;
+
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+
+  font-family: var(--font-primary);
+  font-size: 12px;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.category-select-button:hover,
+.category-filter.dropdown-open .category-select-button {
+  border-color: var(--color-primary);
+}
+
+.category-select-button span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.category-chevron {
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.category-filter.dropdown-open .category-chevron {
+  transform: rotate(180deg);
+}
+
+/* Lista de categorias */
+
+.category-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+
+  z-index: 50;
+
+  width: 100%;
+  max-height: 230px;
+  overflow-y: auto;
+
+  padding: 5px;
+  box-sizing: border-box;
+
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16);
+
+  transform-origin: top center;
+  animation: categoryDropdownIn 0.22s ease forwards;
+}
+
+/* Opções */
+
+.category-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  width: 100%;
+  min-width: 0;
+  padding: 11px 10px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: transparent;
+  color: var(--text-primary);
+
+  font-family: var(--font-primary);
+  font-size: 12px;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.category-option span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-option:hover {
+  background: var(--accent-soft);
+  color: var(--color-primary);
+}
+
+.category-option.selected {
+  background: var(--accent-soft);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.category-option svg {
+  flex-shrink: 0;
+}
+
+.category-empty {
+  padding: 12px 10px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Animação do filtro */
+
+@keyframes categoryDropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scaleY(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+/* ========================================
+   RESPONSIVIDADE - DESKTOP
+======================================== */
+
+@media (min-width: 1025px) {
+  .main-header {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .main-header > div:first-child {
+    flex: 0 0 auto;
+    min-width: max-content;
+  }
+
+  .main-header h1 {
+    white-space: nowrap;
+    line-height: 1.25;
+  }
+
+  .header-actions {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-box {
+    flex: 1;
+    max-width: 320px;
+  }
+}
+
+/* ========================================
+   RESPONSIVIDADE - TABLETS
+======================================== */
+
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 24px;
+  }
+
+  .main-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .main-header h1 {
+    white-space: normal;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .search-box {
+    flex: 1;
+    width: auto;
+  }
+}
+
+/* ========================================
+   RESPONSIVIDADE - TELAS MENORES
+======================================== */
+
+@media (max-width: 760px) {
+  .app-container {
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  .main-content {
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+    padding: 20px 16px;
+    box-sizing: border-box;
+  }
+
+  .main-header {
+    margin-bottom: 26px;
+  }
+
+  .main-header h1 {
+    font-size: 22px;
+  }
+
+  .header-actions {
+    width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .search-box {
+    flex: 1;
+    width: auto;
+    min-width: 180px;
+    max-width: 100%;
+  }
+
+  .category-filter {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+
+  .category-filter select,
+  .category-select-button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .category-dropdown-menu {
+    box-sizing: border-box;
+    max-height: 200px;
+  }
+
+  .welcome-card {
+    min-height: 300px;
+  }
+}
+
+/* ========================================
+   RESPONSIVIDADE - CELULARES
+======================================== */
+
+@media (max-width: 450px) {
+  .main-content {
+    padding: 18px 12px;
+  }
+
+  .main-header > div:first-child {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .main-header h1,
+  .main-header p {
+    overflow-wrap: anywhere;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .search-box {
+    width: 100%;
+    min-width: 0;
+    flex-basis: 100%;
+  }
+
+  .category-filter {
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .icon-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .notes-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .notes-toolbar .welcome-button {
+    width: 100%;
+  }
+
+  .welcome-card {
+    padding: 30px 18px;
+  }
+
+  .welcome-card h2 {
+    font-size: 19px;
+  }
+}
+
+/* ========================================
+   AJUSTES FINAIS DO FILTRO E CABEÇALHO
+======================================== */
+
+.category-filter {
+  position: relative;
+  min-width: 0;
+}
+
+.category-filter select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-actions {
+  min-width: 0;
+}
+
+.search-box {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   ACESSIBILIDADE
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .category-dropdown-menu {
+    animation: none;
+  }
+
+  .category-chevron,
+  .welcome-icon {
+    transition: none;
+  }
+}
