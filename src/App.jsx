@@ -14,6 +14,15 @@ import NoteGrid from './components/NoteGrid';
 import NoteEditor from './pages/NoteEditor';
 import CategoryManager from './pages/CategoryManager';
 import ConfirmDialog from './components/ConfirmDialog';
+import { htmlToText } from './utils/htmlToText';
+import {
+  isValidCategory,
+  isValidNote,
+  readStoredRecords,
+  readStoredString,
+  writeStoredRecords,
+  writeStoredString
+} from './utils/noteStorage';
 
 import './App.css';
 
@@ -32,6 +41,7 @@ function App() {
   // Menu personalizado de categorias
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const categoryDropdownRef = useRef(null);
+  const storageReadReportedRef = useRef(false);
 
   // Fechar o seletor ao clicar fora ou pressionar Escape
   useEffect(() => {
@@ -62,47 +72,87 @@ function App() {
   }, []);
 
   // Tema
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('noteclass_theme') || 'light';
-  });
+  const [themeStorage] = useState(
+    () => readStoredString('noteclass_theme', 'light')
+  );
+  const [theme, setTheme] = useState(
+    () => themeStorage.value === 'dark' ? 'dark' : 'light'
+  );
 
   // Recuperar anotações
-  const [notes, setNotes] = useState(() => {
-    try {
-      return JSON.parse(
-        localStorage.getItem('noteclass_notes')
-      ) || [];
-    } catch {
-      return [];
-    }
-  });
+  const [notesStorage] = useState(
+    () => readStoredRecords('noteclass_notes', isValidNote)
+  );
+  const [notes, setNotes] = useState(() => notesStorage.records);
 
   // Recuperar categorias
-  const [categories, setCategories] = useState(() => {
-    try {
-      return JSON.parse(
-        localStorage.getItem('noteclass_categories')
-      ) || [];
-    } catch {
-      return [];
-    }
-  });
+  const [categoriesStorage] = useState(() =>
+    readStoredRecords(
+      'noteclass_categories',
+      isValidCategory
+    )
+  );
+  const [categories, setCategories] = useState(
+    () => categoriesStorage.records
+  );
+
+  const initialNotesRef = useRef(notes);
+  const initialCategoriesRef = useRef(categories);
+
+  useEffect(() => {
+    if (storageReadReportedRef.current) return;
+    storageReadReportedRef.current = true;
+
+    const reportReadResult = (key, result) => {
+      if (result.error) {
+        console.error(
+          `NoteClass: não foi possível ler ${key}; o estado padrão será usado sem substituir automaticamente os dados existentes.`,
+          result.error
+        );
+      } else if (
+        result.invalidEntries &&
+        result.invalidEntries.length > 0
+      ) {
+        console.warn(
+          `NoteClass: ${result.invalidEntries.length} registro(s) inválido(s) em ${key}; serão ignorados na interface e preservados no armazenamento.`
+        );
+      }
+    };
+
+    reportReadResult('noteclass_theme', themeStorage);
+    reportReadResult('noteclass_notes', notesStorage);
+    reportReadResult('noteclass_categories', categoriesStorage);
+  }, [themeStorage, notesStorage, categoriesStorage]);
 
   // Salvar anotações
   useEffect(() => {
-    localStorage.setItem(
+    if (notes === initialNotesRef.current) return;
+
+    const result = writeStoredRecords(
       'noteclass_notes',
-      JSON.stringify(notes)
+      notes,
+      notesStorage
     );
-  }, [notes]);
+
+    if (result.error) {
+      console.error('NoteClass: não foi possível salvar as anotações.', result.error);
+    }
+  }, [notes, notesStorage]);
 
   // Salvar categorias
   useEffect(() => {
-    localStorage.setItem(
+    if (categories === initialCategoriesRef.current) return;
+
+    const result = writeStoredRecords(
       'noteclass_categories',
-      JSON.stringify(categories)
+      categories,
+      categoriesStorage
     );
-  }, [categories]);
+
+    if (result.error) {
+      console.error('NoteClass: não foi possível salvar as categorias.', result.error);
+    }
+  }, [categories, categoriesStorage]);
 
   // Alternar tema
   function toggleTheme() {
@@ -111,10 +161,14 @@ function App() {
 
     setTheme(newTheme);
 
-    localStorage.setItem(
+    const result = writeStoredString(
       'noteclass_theme',
       newTheme
     );
+
+    if (result.error) {
+      console.error('NoteClass: não foi possível salvar o tema.', result.error);
+    }
   }
 
   // Título da página
@@ -319,7 +373,7 @@ function App() {
   // Filtrar anotações
   const visibleNotes = notes.filter(note => {
     const title = (note.title || '').toLowerCase();
-    const content = (note.content || '').toLowerCase();
+    const content = htmlToText(note.content).toLowerCase();
     const searchTerm = search.toLowerCase();
 
     // Pesquisa

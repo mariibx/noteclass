@@ -6,6 +6,8 @@ import {
   Pencil
 } from 'lucide-react';
 
+import { htmlToText } from '../utils/htmlToText';
+
 import './NoteCard.css';
 
 function NoteCard({
@@ -15,15 +17,6 @@ function NoteCard({
   onToggleFavorite,
   onArchive
 }) {
-
-  // Converter o conteúdo HTML em texto simples
-  function getPreview(content) {
-    const temporaryElement = document.createElement('div');
-
-    temporaryElement.innerHTML = content || '';
-
-    return temporaryElement.textContent || '';
-  }
 
   // Cor personalizada da categoria
   const categoryColor = note.categoryColor || '#8872C7';
@@ -72,7 +65,7 @@ function NoteCard({
         </h3>
 
         <p>
-          {getPreview(note.content).slice(0, 130) ||
+          {htmlToText(note.content).slice(0, 130) ||
             'Anotação sem conteúdo.'}
         </p>
 
